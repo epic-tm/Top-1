@@ -1,0 +1,261 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>epic | globe console</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Space+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.15);
+            --accent: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            background-color: #000;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1500px;
+        }
+
+        /* GLOBE BACKGROUND */
+        .globe-bg {
+            position: fixed;
+            width: 80vh;
+            height: 80vh;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.15;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: globeSpin 20s linear infinite;
+        }
+
+        .globe-bg::before, .globe-bg::after {
+            content: '';
+            position: absolute;
+            width: 100%; height: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+        .globe-bg::before { transform: rotateY(60deg); }
+        .globe-bg::after { transform: rotateY(120deg); }
+
+        @keyframes globeSpin {
+            from { transform: rotate(0deg) rotateX(20deg); }
+            to { transform: rotate(360deg) rotateX(20deg); }
+        }
+
+        .scene {
+            position: relative;
+            width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+            transform-style: preserve-3d;
+            z-index: 2;
+        }
+
+        /* MAIN CONSOLE WINDOW */
+        .notepad-perspective {
+            width: 550px;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(40px);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            transform: translateZ(100px);
+            box-shadow: 0 0 100px rgba(0,0,0,1);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .notepad-header {
+            padding: 12px 18px;
+            background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid var(--border);
+            font-size: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: 'Space Mono', monospace;
+            color: #777;
+            position: sticky; top: 0; z-index: 10;
+        }
+
+        .notepad-body { padding: 30px; }
+        h1 { margin: 0; font-size: 2.5rem; font-weight: 900; letter-spacing: -2px; color: #fff; }
+        .handle { font-family: 'Space Mono', monospace; font-size: 10px; color: #444; display: block; margin-bottom: 20px;}
+
+        /* TASK SYSTEM CSS */
+        .task-input-group {
+            margin-bottom: 25px;
+            border-left: 2px solid var(--border);
+            padding-left: 20px;
+        }
+
+        input, select, textarea {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 10px;
+            font-family: 'Space Mono', monospace;
+            font-size: 12px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-family: 'Space Mono', monospace;
+            font-weight: bold;
+            font-size: 11px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        button:hover { opacity: 0.8; }
+
+        .log-section {
+            margin-top: 30px;
+            font-size: 12px;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        .log-entry {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 2px;
+        }
+
+        .log-tag { color: #555; font-size: 10px; font-family: 'Space Mono', monospace; margin-bottom: 5px; }
+
+        /* VINYL & FLOOR */
+        .floor-container {
+            position: absolute; bottom: 2%; width: 650px;
+            transform: rotateX(60deg) translateZ(-50px);
+            transform-style: preserve-3d; opacity: 0.5;
+        }
+        .disc-underlay {
+            position: absolute; width: 400px; height: 400px;
+            top: 50%; left: 50%; margin-top: -200px; margin-left: -200px;
+            background: url('https://shop.dijondijon.com/cdn/shop/files/r2_black_copy_1200x1200.png?v=1755268037') center/cover;
+            border-radius: 50%; z-index: -1;
+            animation: vinylSpin 8s linear infinite;
+        }
+        @keyframes vinylSpin {
+            from { transform: rotate(0deg) translateZ(-20px); }
+            to { transform: rotate(360deg) translateZ(-20px); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="globe-bg"></div>
+
+    <div class="scene">
+        <div class="notepad-perspective">
+            <div class="notepad-header">
+                <span>SYSTEM://ROADMAP_CONSOLE</span>
+                <span>V.02.LOG</span>
+            </div>
+            
+            <div class="notepad-body">
+                <h1>Roadmap.</h1>
+                <span class="handle">USER: epicversal // ACCESS: RESTRICTED</span>
+
+                <div class="task-input-group">
+                    <select id="task-type">
+                        <option value="5KM_RUN">Physical: 5km Run</option>
+                        <option value="CHESS">Strategic: Chess Grind</option>
+                        <option value="BLENDER">Tech: Blender/Animation</option>
+                        <option value="CODE">Tech: Coding Mastery</option>
+                        <option value="SCHOOL">Academic: Subjects (IRL/FR/SCI/ENG)</option>
+                    </select>
+                    <textarea id="task-detail" placeholder="Describe the milestone..."></textarea>
+                    <input type="password" id="auth-code" placeholder="ENTER ACCESS CODE">
+                    <button onclick="publishLog()">EXECUTE_PUSH_TO_DISCORD</button>
+                </div>
+
+                <div class="log-section" id="log-container">
+                    <span class="handle" style="margin-bottom:10px">RECENT_ACTIVITY:</span>
+                    </div>
+            </div>
+        </div>
+
+        <div class="floor-container">
+            <div class="disc-underlay"></div>
+        </div>
+    </div>
+
+    <script>
+        const DISCORD_WEBHOOK = "YOUR_DISCORD_WEBHOOK_URL_HERE";
+        const SECRET_KEY = "YOUR_PASSWORD_HERE"; // Change this!
+
+        async function publishLog() {
+            const type = document.getElementById('task-type').value;
+            const detail = document.getElementById('task-detail').value;
+            const pass = document.getElementById('auth-code').value;
+
+            if (pass !== SECRET_KEY) {
+                alert("ACCESS DENIED: INVALID CODE");
+                return;
+            }
+
+            if (!detail) return;
+
+            // Discord Payload
+            const payload = {
+                content: `🚀 **Epic Progress Log Update**`,
+                embeds: [{
+                    title: type.replace('_', ' '),
+                    description: detail,
+                    color: 16777215, // White
+                    timestamp: new Date()
+                }]
+            };
+
+            try {
+                const response = await fetch(DISCORD_WEBHOOK, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    addLogToUI(type, detail);
+                    document.getElementById('task-detail').value = "";
+                    document.getElementById('auth-code').value = "";
+                }
+            } catch (err) {
+                alert("Push failed. Check console/webhook URL.");
+            }
+        }
+
+        function addLogToUI(type, detail) {
+            const container = document.getElementById('log-container');
+            const entry = document.createElement('div');
+            entry.className = 'log-entry';
+            const time = new Date().toLocaleTimeString();
+            entry.innerHTML = `
+                <div class="log-tag">[${time}] ${type}</div>
+                <div style="color: #bbb">${detail}</div>
+            `;
+            container.prepend(entry);
+        }
+    </script>
+
+</body>
+</html>
