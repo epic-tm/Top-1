@@ -1,177 +1,26 @@
-<!DOCTYPE HTML>
-<html lang="en">
+
+<!DOCTYPE html>
+<html>
 <head>
-    <title>epic | globe console v.05</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&family=Space+Mono&display=swap" rel="stylesheet">
-    <style>
-        :root { --glass: rgba(255, 255, 255, 0.03); --border: rgba(255, 255, 255, 0.12); }
-        body { margin: 0; background-color: #000; font-family: 'Poppins', sans-serif; color: #fff; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
-        
-        /* 1. TOP STAT BAR */
-        .top-bar { padding: 15px 40px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 100; }
-        .rank-display { font-family: 'Space Mono'; text-align: right; }
-        .rank-number { font-size: 20px; font-weight: 900; color: #fff; }
-
-        /* 2. MAIN LAYOUT */
-        .main-container { display: flex; flex: 1; overflow: hidden; }
-
-        /* LEFT: ROADMAP VIEWER */
-        .roadmap-pane { width: 50%; border-right: 1px solid var(--border); overflow-y: auto; padding: 40px; }
-        .quest-card { margin-bottom: 30px; }
-        .quest-header { font-size: 10px; font-family: 'Space Mono'; color: #555; letter-spacing: 2px; margin-bottom: 10px; }
-        .main-task { font-size: 18px; font-weight: 700; margin-bottom: 15px; display: flex; align-items: center; }
-        .sub-tasks { padding-left: 20px; border-left: 1px solid #222; }
-        .sub-item { padding: 8px 0; font-size: 13px; color: #888; display: flex; align-items: center; cursor: pointer; transition: 0.2s; }
-        .sub-item:hover { color: #fff; }
-        .sub-item input { margin-right: 15px; width: auto; cursor: pointer; accent-color: #fff; }
-
-        /* RIGHT: LOG & INTERFACE */
-        .log-pane { width: 50%; overflow-y: auto; padding: 40px; background: rgba(255,255,255,0.01); display: flex; flex-direction: column; }
-        .input-box { background: rgba(0,0,0,0.5); border: 1px solid var(--border); border-radius: 4px; padding: 20px; margin-bottom: 20px; }
-        textarea, input[type="text"], input[type="password"] { 
-            width: 100%; background: transparent; border: 1px solid #333; color: #fff; 
-            padding: 10px; font-family: 'Space Mono'; font-size: 11px; margin-bottom: 10px; box-sizing: border-box; 
-        }
-        button { 
-            width: 100%; background: #fff; color: #000; border: none; padding: 12px; 
-            font-family: 'Space Mono'; font-weight: 900; font-size: 11px; cursor: pointer; 
-        }
-        
-        /* THE LOG FEED */
-        .feed-container { margin-top: 20px; }
-        .log-entry { padding: 15px; border: 1px solid var(--border); margin-bottom: 15px; background: rgba(255,255,255,0.02); }
-        .log-image { width: 100%; height: 150px; object-fit: cover; margin-top: 10px; border-radius: 2px; filter: grayscale(1); }
-
-        /* 3. GLOBE */
-        .globe-bg { position: fixed; width: 60vh; height: 60vh; border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 50%; z-index: -1; opacity: 0.1; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; animation: spin 30s linear infinite; }
-        @keyframes spin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
-    </style>
+<meta charset="UTF-8">
+<title>Omni-Rank Console v2.1</title>
+<style>
+body{margin:0;background:#000;color:#fff;font-family:monospace;display:flex;height:100vh}
+#tree,#panel{flex:1;padding:20px;overflow:auto}
+.node{padding:8px;border-bottom:1px solid #222;cursor:pointer}
+.node:hover{background:#111}
+.log{border:1px solid #222;padding:10px;margin-bottom:10px}
+h2,h3{margin-top:0}
+</style>
 </head>
 <body>
-
-    <div class="globe-bg"></div>
-
-    <div class="top-bar">
-        <div>
-            <span style="font-family: 'Space Mono'; font-size: 10px; color: #555;">USER://EPICVERSAL</span>
-            <div style="font-weight: 900; letter-spacing: -1px;">GLOBAL_RANK_SYSTEM</div>
-        </div>
-        <div class="rank-display">
-            <div style="font-size: 10px; color: #555;">CURRENT_POSITION</div>
-            <div class="rank-number" id="global-rank">8,102,405,122</div>
-            <div id="perc" style="font-size: 9px; color: #777;">TOP 100.0000%</div>
-        </div>
-    </div>
-
-    <div class="main-container">
-        <div class="roadmap-pane">
-            <div class="quest-card">
-                <div class="quest-header">QUEST_01 // CREATIVE_ENGINE</div>
-                <div class="main-task">Blender & Digital Arts</div>
-                <div class="sub-tasks">
-                    <label class="sub-item"><input type="checkbox" onclick="toggleTask('Master Geo-Nodes')"> Master Geometry Nodes Base</label>
-                    <label class="sub-item"><input type="checkbox" onclick="toggleTask('30s Physics Render')"> Complete 30s Physics Render</label>
-                    <label class="sub-item"><input type="checkbox" onclick="toggleTask('Anatomy Study')"> Full Figure Anatomy Drawing</label>
-                </div>
-            </div>
-
-            <div class="quest-card">
-                <div class="quest-header">QUEST_02 // STRATEGIC_DEPOT</div>
-                <div class="main-task">Chess & Coding</div>
-                <div class="sub-tasks">
-                    <label class="sub-item"><input type="checkbox" onclick="toggleTask('Lichess 2000')"> Reach 2000 ELO (Lichess)</label>
-                    <label class="sub-item"><input type="checkbox" onclick="toggleTask('Endgame Mastery')"> Solve 100 Polgar Endgames</label>
-                    <label class="sub-item"><input type="checkbox" onclick="toggleTask('Discord Tooling')"> Build custom Discord Webhook Tool</label>
-                </div>
-            </div>
-
-            <div class="quest-card">
-                <div class="quest-header">QUEST_03 // PHYSICAL_HARDWARE</div>
-                <div class="main-task">Endurance Running</div>
-                <div class="sub-tasks">
-                    <label class="sub-item"><input type="checkbox" onclick="toggleTask('5km Daily Streak')"> 7 Day 5km Streak</label>
-                    <label class="sub-item"><input type="checkbox" onclick="toggleTask('Sub 20m 5k')"> Achieve Sub-20 5km Official Time</label>
-                </div>
-            </div>
-
-            <div class="quest-card">
-                <div class="quest-header">QUEST_04 // ACADEMIC_CORE</div>
-                <div class="main-task">Leaving Cert Mastery</div>
-                <div class="sub-tasks">
-                    <label class="sub-item"><input type="checkbox" onclick="toggleTask('Irish H1 Oral')"> Perfect Irish Oral Prep</label>
-                    <label class="sub-item"><input type="checkbox" onclick="toggleTask('Maths Calculus')"> Mastery of Higher Level Calculus</label>
-                    <label class="sub-item"><input type="checkbox" onclick="toggleTask('Science Theory')"> Complete Triple Science Mock Prep</label>
-                </div>
-            </div>
-        </div>
-
-        <div class="log-pane">
-            <div class="input-box">
-                <span class="quest-header">UPDATE_STATUS</span>
-                <input type="text" id="log-image-url" placeholder="IMAGE_URL (Optional)">
-                <textarea id="log-text" placeholder="Detail your progress..."></textarea>
-                <input type="password" id="auth-code" placeholder="ENTER ACCESS_CODE">
-                <button onclick="publishLog()">EXECUTE_PUSH</button>
-            </div>
-
-            <div class="feed-container" id="feed">
-                <span class="quest-header">HISTORY_LOG</span>
-                </div>
-        </div>
-    </div>
-
-    <script>
-        const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1452050186124656868/E_Dm596hXN7Lqcxl061uIFE8V3NN3oq10_9mdNg1mQQ7x3jbsaexsG04iv_5IanmCZvw";
-        const SECRET_KEY = "epicversallovesephy"; 
-        let currentRank = 8102405122;
-
-        function toggleTask(name) {
-            document.getElementById('log-text').value = `Task Progress: [${name}] Completed.`;
-        }
-
-        async function publishLog() {
-            const detail = document.getElementById('log-text').value;
-            const imgUrl = document.getElementById('log-image-url').value;
-            const pass = document.getElementById('auth-code').value;
-
-            if (pass !== SECRET_KEY) { alert("ACCESS DENIED"); return; }
-            if (!detail) return;
-
-            // Update Rank Logic (Slashing rank per update)
-            currentRank = Math.floor(currentRank * 0.4); 
-            if (currentRank < 100) currentRank = 100;
-            
-            document.getElementById('global-rank').innerText = currentRank.toLocaleString();
-            document.getElementById('perc').innerText = "TOP " + ((currentRank / 8102405122) * 100).toFixed(6) + "%";
-
-            // Add to Local UI
-            const feed = document.getElementById('feed');
-            const entry = document.createElement('div');
-            entry.className = 'log-entry';
-            entry.innerHTML = `<div style="font-size:10px; color:#555; margin-bottom:5px;">LOG_${Date.now()}</div>
-                               <div>${detail}</div>
-                               ${imgUrl ? `<img src="${imgUrl}" class="log-image">` : ''}`;
-            feed.prepend(entry);
-
-            // Discord Push
-            const payload = {
-                content: `🚀 **RANK UPDATE: #${currentRank.toLocaleString()}**`,
-                embeds: [{
-                    description: detail,
-                    color: 16777215,
-                    image: imgUrl ? { url: imgUrl } : null,
-                    timestamp: new Date()
-                }]
-            };
-
-            await fetch(DISCORD_WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-            
-            document.getElementById('log-text').value = "";
-            document.getElementById('log-image-url').value = "";
-            document.getElementById('auth-code').value = "";
-        }
-    </script>
+<div id="tree"></div>
+<div id="panel">
+<h2>GLOBAL RANK</h2>
+<div id="rank"></div>
+<input id="pass" type="password" placeholder="ACCESS CODE"><br><br>
+<div id="log"></div>
+</div>
+<script src="script.js"></script>
 </body>
 </html>

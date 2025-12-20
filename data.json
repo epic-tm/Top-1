@@ -1,0 +1,204 @@
+{
+  "initialRank": 8102405122,
+  "secret": "epicversallovesephy",
+  "pillars": [
+    {
+      "id": "neural",
+      "name": "Neural Throughput",
+      "nodes": [
+        {
+          "id": "typing_60",
+          "label": "Typing 60 WPM",
+          "weight": 0.005
+        },
+        {
+          "id": "typing_100",
+          "label": "Typing 100 WPM",
+          "weight": 0.02
+        },
+        {
+          "id": "reaction_200",
+          "label": "Reaction <200ms",
+          "weight": 0.005
+        },
+        {
+          "id": "memory_cards",
+          "label": "Memorize 52-Card Deck",
+          "weight": 0.02
+        }
+      ]
+    },
+    {
+      "id": "biological",
+      "name": "Biological Hardware",
+      "nodes": [
+        {
+          "id": "5k_sub25",
+          "label": "5km Sub-25",
+          "weight": 0.005
+        },
+        {
+          "id": "5k_sub20",
+          "label": "5km Sub-20",
+          "weight": 0.02
+        },
+        {
+          "id": "lsit_30",
+          "label": "L-Sit 30s",
+          "weight": 0.005
+        },
+        {
+          "id": "pistol_squat",
+          "label": "Pistol Squat",
+          "weight": 0.02
+        }
+      ]
+    },
+    {
+      "id": "strategic",
+      "name": "Strategic Combat",
+      "nodes": [
+        {
+          "id": "chess_1200",
+          "label": "Chess 1200 ELO",
+          "weight": 0.005
+        },
+        {
+          "id": "chess_1600",
+          "label": "Chess 1600 ELO",
+          "weight": 0.02
+        },
+        {
+          "id": "game_theory",
+          "label": "Game Theory Fundamentals",
+          "weight": 0.02
+        }
+      ]
+    },
+    {
+      "id": "creative",
+      "name": "Creative Manifestation",
+      "nodes": [
+        {
+          "id": "blender_model",
+          "label": "Blender Modeling",
+          "weight": 0.005
+        },
+        {
+          "id": "geo_nodes",
+          "label": "Geometry Nodes Mastery",
+          "weight": 0.02
+        },
+        {
+          "id": "music_comp",
+          "label": "Music Composition",
+          "weight": 0.02
+        }
+      ]
+    },
+    {
+      "id": "technical",
+      "name": "Technical Engineering",
+      "nodes": [
+        {
+          "id": "python_logic",
+          "label": "Python Logic Mastery",
+          "weight": 0.005
+        },
+        {
+          "id": "cpp_eff",
+          "label": "C++ Efficiency",
+          "weight": 0.02
+        },
+        {
+          "id": "linux_cli",
+          "label": "Linux CLI Proficiency",
+          "weight": 0.02
+        }
+      ]
+    },
+    {
+      "id": "academic",
+      "name": "Academic Core",
+      "nodes": [
+        {
+          "id": "calculus",
+          "label": "Calculus Mastery",
+          "weight": 0.02
+        },
+        {
+          "id": "linear_alg",
+          "label": "Linear Algebra",
+          "weight": 0.02
+        },
+        {
+          "id": "physics_quantum",
+          "label": "Quantum Physics Intro",
+          "weight": 0.02
+        }
+      ]
+    },
+    {
+      "id": "linguistic",
+      "name": "Linguistic Flow",
+      "nodes": [
+        {
+          "id": "irish_h1",
+          "label": "Irish H1 Oral",
+          "weight": 0.02
+        },
+        {
+          "id": "french_c1",
+          "label": "French C1 Fluency",
+          "weight": 0.02
+        },
+        {
+          "id": "public_speak",
+          "label": "Public Speaking",
+          "weight": 0.005
+        }
+      ]
+    },
+    {
+      "id": "executive",
+      "name": "Executive Control",
+      "nodes": [
+        {
+          "id": "deep_work_90",
+          "label": "90m Deep Work",
+          "weight": 0.005
+        },
+        {
+          "id": "flow_4h",
+          "label": "4h Flow State",
+          "weight": 0.02
+        },
+        {
+          "id": "med_20",
+          "label": "20m Daily Meditation",
+          "weight": 0.005
+        }
+      ]
+    }
+  ],
+  "synergies": [
+    {
+      "id": "harmonic_architect",
+      "requires": [
+        "calculus",
+        "geo_nodes"
+      ],
+      "weight": 0.2,
+      "title": "HARMONIC ARCHITECT"
+    },
+    {
+      "id": "cerebral_athlete",
+      "requires": [
+        "5k_sub20",
+        "reaction_200"
+      ],
+      "weight": 0.15,
+      "title": "CEREBRAL ATHLETE"
+    }
+  ]
+}
