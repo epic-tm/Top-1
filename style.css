@@ -1,0 +1,66 @@
+
+:root{
+ --bg:#000;
+ --glass:rgba(255,255,255,0.04);
+ --border:rgba(255,255,255,0.15);
+ --muted:#777;
+}
+*{box-sizing:border-box}
+body{
+ margin:0;background:#000;color:#fff;
+ font-family:'Inter',sans-serif;
+ height:100vh;overflow:hidden;
+}
+.globe{
+ position:fixed;inset:0;margin:auto;
+ width:60vh;height:60vh;border-radius:50%;
+ border:1px solid rgba(255,255,255,0.08);
+ opacity:0.12;animation:spin 40s linear infinite;
+ pointer-events:none;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+header{
+ display:flex;justify-content:space-between;
+ padding:20px 40px;border-bottom:1px solid var(--border);
+ backdrop-filter:blur(10px);
+}
+.user{font-family:'Space Mono';font-size:11px;color:var(--muted)}
+.title{font-weight:900;letter-spacing:-1px}
+.rankbox{text-align:right;font-family:'Space Mono'}
+.rank{font-size:22px;font-weight:900}
+
+main{
+ display:flex;height:calc(100vh - 80px)
+}
+#tree{
+ flex:1;padding:30px;overflow:auto
+}
+.panel{
+ flex:1;padding:30px;border-left:1px solid var(--border);
+ background:rgba(255,255,255,0.02)
+}
+h3{
+ font-size:11px;letter-spacing:2px;
+ color:var(--muted);margin-top:30px
+}
+.node{
+ padding:10px 14px;margin:6px 0;
+ border:1px solid var(--border);
+ background:var(--glass);
+ cursor:pointer;transition:.2s
+}
+.node:hover{background:rgba(255,255,255,0.1)}
+.node.done{opacity:0.5}
+
+input{
+ width:100%;padding:12px;
+ background:#000;border:1px solid var(--border);
+ color:#fff;font-family:'Space Mono'
+}
+.log{
+ margin-top:15px;padding:12px;
+ border:1px solid var(--border);
+ background:rgba(255,255,255,0.03);
+ font-size:12px
+}

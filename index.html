@@ -3,24 +3,32 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Omni-Rank Console v2.1</title>
-<style>
-body{margin:0;background:#000;color:#fff;font-family:monospace;display:flex;height:100vh}
-#tree,#panel{flex:1;padding:20px;overflow:auto}
-.node{padding:8px;border-bottom:1px solid #222;cursor:pointer}
-.node:hover{background:#111}
-.log{border:1px solid #222;padding:10px;margin-bottom:10px}
-h2,h3{margin-top:0}
-</style>
+<title>Omni-Rank Console v3.0</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Inter:wght@300;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="tree"></div>
-<div id="panel">
-<h2>GLOBAL RANK</h2>
-<div id="rank"></div>
-<input id="pass" type="password" placeholder="ACCESS CODE"><br><br>
-<div id="log"></div>
-</div>
+<div class="globe"></div>
+
+<header>
+  <div>
+    <div class="user">USER://EPICVERSAL</div>
+    <div class="title">OMNI-RANK CONSOLE</div>
+  </div>
+  <div class="rankbox">
+    <div class="label">GLOBAL_RANK</div>
+    <div id="rank" class="rank"></div>
+  </div>
+</header>
+
+<main>
+  <section id="tree"></section>
+  <section class="panel">
+    <input id="pass" type="password" placeholder="ACCESS CODE">
+    <div id="log"></div>
+  </section>
+</main>
+
 <script src="script.js"></script>
 </body>
 </html>

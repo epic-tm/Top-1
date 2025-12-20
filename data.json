@@ -23,7 +23,7 @@
         },
         {
           "id": "memory_cards",
-          "label": "Memorize 52-Card Deck",
+          "label": "52-Card Memory Deck",
           "weight": 0.02
         }
       ]
@@ -48,7 +48,7 @@
           "weight": 0.005
         },
         {
-          "id": "pistol_squat",
+          "id": "pistol",
           "label": "Pistol Squat",
           "weight": 0.02
         }
@@ -101,17 +101,17 @@
       "name": "Technical Engineering",
       "nodes": [
         {
-          "id": "python_logic",
+          "id": "python",
           "label": "Python Logic Mastery",
           "weight": 0.005
         },
         {
-          "id": "cpp_eff",
+          "id": "cpp",
           "label": "C++ Efficiency",
           "weight": 0.02
         },
         {
-          "id": "linux_cli",
+          "id": "linux",
           "label": "Linux CLI Proficiency",
           "weight": 0.02
         }
@@ -127,12 +127,12 @@
           "weight": 0.02
         },
         {
-          "id": "linear_alg",
+          "id": "linear",
           "label": "Linear Algebra",
           "weight": 0.02
         },
         {
-          "id": "physics_quantum",
+          "id": "quantum",
           "label": "Quantum Physics Intro",
           "weight": 0.02
         }
@@ -143,17 +143,17 @@
       "name": "Linguistic Flow",
       "nodes": [
         {
-          "id": "irish_h1",
+          "id": "irish",
           "label": "Irish H1 Oral",
           "weight": 0.02
         },
         {
-          "id": "french_c1",
+          "id": "french",
           "label": "French C1 Fluency",
           "weight": 0.02
         },
         {
-          "id": "public_speak",
+          "id": "speaking",
           "label": "Public Speaking",
           "weight": 0.005
         }
@@ -164,18 +164,18 @@
       "name": "Executive Control",
       "nodes": [
         {
-          "id": "deep_work_90",
+          "id": "deep90",
           "label": "90m Deep Work",
           "weight": 0.005
         },
         {
-          "id": "flow_4h",
+          "id": "flow4h",
           "label": "4h Flow State",
           "weight": 0.02
         },
         {
-          "id": "med_20",
-          "label": "20m Daily Meditation",
+          "id": "med20",
+          "label": "20m Meditation",
           "weight": 0.005
         }
       ]
@@ -183,7 +183,7 @@
   ],
   "synergies": [
     {
-      "id": "harmonic_architect",
+      "id": "harmonic",
       "requires": [
         "calculus",
         "geo_nodes"
@@ -192,7 +192,7 @@
       "title": "HARMONIC ARCHITECT"
     },
     {
-      "id": "cerebral_athlete",
+      "id": "athlete",
       "requires": [
         "5k_sub20",
         "reaction_200"
