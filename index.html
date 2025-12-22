@@ -2,260 +2,158 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ultimate Completionist | Starward Journey</title>
+    <title>Ultimate Completionist | Trailblazer Dashboard</title>
     <style>
         :root {
             --sr-cyan: #00f2ff;
             --sr-gold: #f8d478;
             --sr-bg: #02050a;
-            --glass: rgba(15, 25, 45, 0.85);
-            --border: rgba(0, 242, 255, 0.4);
+            --glass: rgba(15, 25, 45, 0.7);
+            --border: rgba(0, 242, 255, 0.3);
+            --font-main: 'Segoe UI', sans-serif;
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+            margin: 0; padding: 0; width: 100%; height: 100%;
             background: var(--sr-bg);
-            /* Using a cosmic space background */
-            background-image: radial-gradient(circle at center, #1a2a4a 0%, #02050a 100%);
-            color: white;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-image: radial-gradient(circle at center, #0a162b 0%, #02050a 100%);
+            color: white; font-family: var(--font-main);
             overflow: hidden;
         }
 
-        /* Animated Grid Background */
-        .bg-grid {
-            position: fixed;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            background-image: 
-                linear-gradient(var(--border) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 100px 100px;
-            transform: perspective(500px) rotateX(60deg);
-            opacity: 0.1;
-            z-index: 0;
-        }
-
-        /* Top HUD Bar */
-        .hud-header {
-            position: relative;
-            z-index: 10;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 50px;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .level-badge {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .circle-rank {
-            width: 50px;
-            height: 50px;
-            border: 2px solid var(--sr-cyan);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 15px var(--sr-cyan);
-            font-weight: bold;
-            background: rgba(0,0,0,0.5);
-        }
-
-        /* Main Content Grid */
-        .dashboard-container {
-            position: relative;
-            z-index: 5;
-            display: grid;
-            grid-template-columns: 350px 1fr 350px;
-            gap: 30px;
-            padding: 40px 50px;
-            height: calc(100vh - 150px);
-        }
-
-        /* Left Panel: Domain List */
-        .domain-list {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .domain-card {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            padding: 20px;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            clip-path: polygon(0 0, 100% 0, 100% 70%, 90% 100%, 0 100%);
-        }
-
-        .domain-card:hover {
-            background: rgba(0, 242, 255, 0.15);
-            border-color: var(--sr-cyan);
-            transform: translateX(10px);
-        }
-
-        .domain-card.active {
-            border-left: 5px solid var(--sr-cyan);
-        }
-
-        /* Center Panel: Radar Chart & Model */
-        .center-display {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(circle, rgba(0,242,255,0.05) 0%, transparent 70%);
-        }
-
-        .radar-chart {
-            width: 300px;
-            height: 300px;
-            border: 1px solid var(--border);
-            border-radius: 50%;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .radar-shape {
-            width: 70%;
-            height: 70%;
-            background: rgba(0, 242, 255, 0.3);
-            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
-            filter: drop-shadow(0 0 10px var(--sr-cyan));
-            animation: pulse 3s infinite alternate;
-        }
-
-        @keyframes pulse {
-            from { transform: scale(0.95); opacity: 0.6; }
-            to { transform: scale(1.05); opacity: 0.9; }
-        }
-
-        /* Right Panel: Global Ranking */
-        .rank-panel {
-            background: var(--glass);
-            border: 1px solid var(--sr-gold);
-            padding: 25px;
-            backdrop-filter: blur(10px);
-            clip-path: polygon(10% 0, 100% 0, 100% 100%, 0 100%, 0 15%);
-        }
-
-        .big-rank {
-            font-size: 2.5rem;
-            color: var(--sr-gold);
-            text-shadow: 0 0 20px rgba(248, 212, 120, 0.5);
-            margin: 10px 0;
-        }
-
-        /* Minecraft-style Connections Footer */
-        .footer-nav {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            padding: 20px 50px;
-            background: rgba(0,0,0,0.8);
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: flex-end;
+        /* Scanline Effect */
+        body::before {
+            content: " ";
+            position: fixed; top: 0; left: 0; width: 100%; height: 2px;
+            background: rgba(0, 242, 255, 0.1);
+            animation: scanline 8s linear infinite;
             z-index: 100;
         }
 
-        .btn-sync {
-            background: transparent;
-            color: var(--sr-cyan);
-            border: 1px solid var(--sr-cyan);
-            padding: 10px 30px;
-            font-size: 14px;
-            letter-spacing: 2px;
+        @keyframes scanline { 0% { top: 0%; } 100% { top: 100%; } }
+
+        /* HUD Header */
+        .hud-header {
+            position: relative; z-index: 10;
+            display: flex; justify-content: space-between;
+            padding: 30px 60px;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(5px);
+        }
+
+        /* Domain Diamonds (The Star Rail Style) */
+        .domain-container {
+            display: flex; flex-direction: column; gap: 30px;
+            position: relative; z-index: 10;
+        }
+
+        .domain-diamond {
+            width: 320px; height: 90px;
+            background: var(--glass);
+            border-left: 4px solid var(--sr-cyan);
+            clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
+            display: flex; align-items: center; padding: 0 25px;
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             cursor: pointer;
-            transition: 0.3s;
+            border-right: 1px solid transparent;
+        }
+
+        .domain-diamond:hover {
+            transform: translateX(15px);
+            background: rgba(0, 242, 255, 0.15);
+            border-right: 1px solid var(--sr-cyan);
+            box-shadow: -10px 0 20px rgba(0, 242, 255, 0.2);
+        }
+
+        .node-number {
+            font-size: 24px; font-weight: 900; color: rgba(255,255,255,0.2);
+            margin-right: 20px; font-style: italic;
+        }
+
+        /* The Radar (Center Display) */
+        .radar-box {
+            position: relative;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .radar-ring {
+            position: absolute; width: 400px; height: 400px;
+            border: 1px solid var(--border); border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Sync Button */
+        .btn-sync {
+            background: transparent; color: var(--sr-cyan);
+            border: 1px solid var(--sr-cyan);
+            padding: 12px 40px; font-size: 14px; letter-spacing: 4px;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+            transition: 0.3s; cursor: pointer;
         }
 
         .btn-sync:hover {
-            background: var(--sr-cyan);
-            color: black;
-            box-shadow: 0 0 20px var(--sr-cyan);
+            background: var(--sr-cyan); color: #000;
+            box-shadow: 0 0 30px var(--sr-cyan);
         }
-
     </style>
 </head>
 <body>
 
-    <div class="bg-grid"></div>
-
     <header class="hud-header">
-        <div class="level-badge">
-            <div class="circle-rank">01</div>
-            <div>
-                <div style="font-size: 12px; color: var(--sr-cyan); letter-spacing: 2px;">TRAILBLAZER PATH</div>
-                <div style="font-size: 20px; font-weight: bold;">ULTIMATE COMPLETIONIST</div>
-            </div>
+        <div>
+            <div style="color: var(--sr-cyan); font-size: 12px; letter-spacing: 3px;">SYSTEM VERSION 2.5.0</div>
+            <div style="font-size: 24px; font-weight: bold; letter-spacing: 1px;">TRAILBLAZER: <span style="color:var(--sr-gold)">USER_01</span></div>
         </div>
-        <div style="text-align: right;">
-            <div style="font-size: 12px; color: #888;">SERVER TIME</div>
-            <div id="clock" style="font-size: 18px;">2025-12-22</div>
+        <div style="text-align: right">
+            <div style="font-size: 12px; color: var(--sr-cyan);">COMPLETION RATE</div>
+            <div style="font-size: 28px; font-weight: bold;">1.22<span style="font-size: 14px;">%</span></div>
         </div>
     </header>
 
-    <main class="dashboard-container">
-        <section class="domain-list">
-            <div class="domain-card active">
-                <div style="color: var(--sr-cyan); font-size: 12px;">DOMAIN 01</div>
-                <div style="font-size: 18px; margin: 5px 0;">THE GRANDMASTER</div>
-                <div style="color: #55FF55; font-size: 14px;">ELO: 2150 (Top 0.5%)</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 60px; align-items: center; height: 60vh;">
+        
+        <div class="domain-container">
+            <div class="domain-diamond">
+                <span class="node-number">01</span>
+                <div>
+                    <div style="font-size: 11px; color: var(--sr-cyan);">INTELLECTUAL</div>
+                    <div style="font-size: 18px; font-weight: bold;">CHESS MASTERY</div>
+                </div>
             </div>
-
-            <div class="domain-card">
-                <div style="color: var(--sr-cyan); font-size: 12px;">DOMAIN 02</div>
-                <div style="font-size: 18px; margin: 5px 0;">THE ARCHITECT</div>
-                <div style="color: #aaa; font-size: 14px;">GH STREAK: 365 DAYS</div>
+            <div class="domain-diamond">
+                <span class="node-number">02</span>
+                <div>
+                    <div style="font-size: 11px; color: var(--sr-cyan);">TECHNICAL</div>
+                    <div style="font-size: 18px; font-weight: bold;">CODE ARCHITECT</div>
+                </div>
             </div>
-
-            <div class="domain-card">
-                <div style="color: var(--sr-cyan); font-size: 12px;">DOMAIN 03</div>
-                <div style="font-size: 18px; margin: 5px 0;">THE ENGINE</div>
-                <div style="color: #aaa; font-size: 14px;">VO2 MAX: 58</div>
+            <div class="domain-diamond">
+                <span class="node-number">03</span>
+                <div>
+                    <div style="font-size: 11px; color: var(--sr-cyan);">PHYSICAL</div>
+                    <div style="font-size: 18px; font-weight: bold;">BIO-ENGINE</div>
+                </div>
             </div>
-        </section>
+        </div>
 
-        <section class="center-display">
-            <div class="radar-chart">
-                <div class="radar-shape"></div>
-                <span style="position: absolute; top: -30px; color: var(--sr-cyan);">LOGIC</span>
-                <span style="position: absolute; bottom: -30px; color: var(--sr-cyan);">STAMINA</span>
-                <span style="position: absolute; right: -60px; color: var(--sr-cyan);">WEALTH</span>
-                <span style="position: absolute; left: -60px; color: var(--sr-cyan);">SOCIAL</span>
+        <div class="radar-box">
+            <div class="radar-ring"></div>
+            <div style="width: 250px; height: 250px; background: rgba(0,242,255,0.1); clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); border: 1px solid var(--sr-cyan); position: relative; z-index: 5;">
+                <div style="width: 100%; height: 100%; background: var(--sr-cyan); opacity: 0.2; transform: scale(0.6);"></div>
             </div>
-        </section>
+        </div>
 
-        <section class="rank-panel">
-            <div style="font-size: 14px; letter-spacing: 2px;">WORLD LEADERBOARD</div>
-            <div class="big-rank">#9,421,050</div>
-            <div style="font-size: 12px; color: #888; margin-top: 20px;">PROGRESS TO TOP 100</div>
-            <div style="width: 100%; height: 4px; background: #333; margin-top: 10px;">
-                <div style="width: 1.2%; height: 100%; background: var(--sr-gold); box-shadow: 0 0 10px var(--sr-gold);"></div>
-            </div>
-            <p style="font-size: 12px; line-height: 1.6; margin-top: 30px; color: #ccc;">
-                "May this journey lead us starward. Master all domains to reach the ultimate human potential."
-            </p>
-        </section>
-    </main>
+        <div style="background: var(--glass); padding: 40px; border-right: 4px solid var(--sr-gold); clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);">
+            <div style="color: var(--sr-gold); letter-spacing: 2px; font-size: 12px;">GLOBAL DATASET</div>
+            <div style="font-size: 3rem; font-weight: bold; margin: 10px 0;">#9,421,050</div>
+            <div style="font-size: 13px; color: #888;">RANKING: <span style="color: white;">UNRANKED (LEVEL 1)</span></div>
+        </div>
+    </div>
 
-    <footer class="footer-nav">
-        <button class="btn-sync" onclick="alert('Syncing with Chess.com, GitHub, and Strava...')">INITIALIZE DATA SYNC</button>
+    <footer style="position: fixed; bottom: 50px; right: 60px;">
+        <button class="btn-sync">ACCESS ARCHIVE</button>
     </footer>
 
 </body>
