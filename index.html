@@ -2,188 +2,198 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Completionist | Real Life 100%</title>
+    <title>Ultimate Completionist | Trailblazer Stats</title>
     <style>
-        /* 1. CORE SYSTEM STYLES */
-        @font-face {
-            font-family: 'Minecraft';
-            src: url('https://fonts.cdnfonts.com/s/14897/Minecraftia-Regular.woff');
-        }
-
         :root {
-            --mc-bg: #212121;
-            --mc-gui: #c6c6c6;
-            --mc-green: #55FF55;
-            --mc-purple: #b432ff;
-            --mc-line: #707070;
-            --pixel: 4px;
+            --sr-blue: #00f2ff;
+            --sr-gold: #f8d478;
+            --glass: rgba(10, 20, 40, 0.85);
+            --border: rgba(0, 242, 255, 0.3);
         }
 
-        body, html {
+        body {
             margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #050505; /* The Void */
-            font-family: 'Minecraft', sans-serif;
+            background: #02050a url('https://e0.pxfuel.com/wallpapers/1001/506/desktop-wallpaper-star-rail-background.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', sans-serif;
             color: white;
             overflow: hidden;
-            image-rendering: pixelated;
         }
 
-        /* 2. THE HUD (Top Bar) */
-        .hud-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
+        /* 1. TOP HUD - Trailblazer Rank */
+        .header-hud {
+            display: flex;
+            justify-content: space-between;
+            padding: 30px 60px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        }
+
+        .completion-circle {
+            width: 80px;
+            height: 80px;
+            border: 4px solid var(--sr-blue);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px var(--sr-blue);
+        }
+
+        /* 2. THE MAIN MASTERY GRID */
+        .main-stage {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 20px;
+            padding: 40px;
+            height: 70vh;
+            align-items: center;
+        }
+
+        /* 3. RADAR CHART PANEL (Glassmorphism) */
+        .stats-panel {
+            background: var(--glass);
+            border-left: 4px solid var(--sr-blue);
             padding: 20px;
-            z-index: 100;
-            pointer-events: none;
+            backdrop-filter: blur(10px);
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%);
         }
 
-        .mastery-card {
-            background: rgba(0, 0, 0, 0.8);
-            border: var(--pixel) solid #fff;
-            padding: 15px;
-            width: fit-content;
-            pointer-events: auto;
-        }
-
-        .xp-bar-container {
-            width: 300px;
-            height: 20px;
-            background: #333;
-            border: 2px solid #000;
-            margin-top: 10px;
-        }
-
-        .xp-fill {
-            height: 100%;
-            background: var(--mc-green);
-            box-shadow: inset -4px 0 0 #3ebb3e;
-            width: 1.2%; /* Dynamic */
-        }
-
-        /* 3. THE END GATEWAY (Star Chart Hub) */
-        .canvas-area {
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1000px;
-        }
-
-        .gateway-core {
+        .radar-placeholder {
+            width: 250px;
+            height: 250px;
+            border: 1px solid var(--border);
+            margin: 20px auto;
+            border-radius: 50%;
             position: relative;
-            width: 120px;
-            height: 120px;
-            background: #222; /* Bedrock Color */
-            border: 6px solid #000;
-            box-shadow: inset 4px 4px #444, inset -4px -4px #111;
+            background: repeating-conic-gradient(from 0deg, transparent 0deg 59deg, var(--border) 60deg) 50% 50% / 100% 100% no-repeat;
         }
 
-        .portal-animation {
-            width: 100%;
+        /* 4. DOMAIN NODES (Trailblazer Path) */
+        .node-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .sr-node {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            position: relative;
+            clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+        }
+
+        .sr-node:hover {
+            background: rgba(0, 242, 255, 0.1);
+            border-color: var(--sr-blue);
+            transform: translateX(10px);
+        }
+
+        .sr-node.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 5px;
             height: 100%;
-            background: radial-gradient(circle, #b432ff 0%, #000 70%);
-            animation: pulse 2s infinite alternate;
+            background: var(--sr-blue);
         }
 
-        @keyframes pulse {
-            from { opacity: 0.5; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1.1); box-shadow: 0 0 40px var(--mc-purple); }
+        .rank-badge {
+            color: var(--sr-gold);
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px var(--sr-gold);
         }
 
-        /* 4. THE NODES (Domains) */
-        .node-link {
-            position: absolute;
-            text-decoration: none;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transition: 0.2s;
-        }
-
-        .node-link:hover { transform: scale(1.2); }
-
-        .node-box {
-            width: 64px;
-            height: 64px;
-            background: #333;
-            border: 4px solid #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
-        }
-
-        .node-label {
-            margin-top: 10px;
-            text-shadow: 2px 2px #000;
-            background: rgba(0,0,0,0.7);
-            padding: 2px 8px;
-        }
-
-        /* 5. ADVANCEMENT LINES */
-        .connector {
-            position: absolute;
-            background: var(--mc-line);
-            box-shadow: 2px 2px #000;
-            z-index: -1;
-        }
-
-        /* 6. ADVANCEMENT SCREEN (The Image You Sent) */
-        .gui-window {
+        /* 5. BOTTOM SYNC BAR */
+        .footer-sync {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 800px;
-            height: 600px;
-            background: var(--mc-gui);
-            border: var(--pixel) solid #000;
-            box-shadow: inset var(--pixel) var(--pixel) #fff, inset calc(var(--pixel) * -1) calc(var(--pixel) * -1) #555;
-            display: none; /* Hidden until clicked */
-            flex-direction: column;
+            bottom: 40px;
+            right: 60px;
+        }
+
+        .sync-btn {
+            background: transparent;
+            color: white;
+            border: 1px solid var(--sr-blue);
+            padding: 10px 40px;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .sync-btn:hover {
+            background: var(--sr-blue);
+            color: black;
+            box-shadow: 0 0 30px var(--sr-blue);
         }
     </style>
 </head>
 <body>
 
-    <div class="hud-overlay">
-        <div class="mastery-card">
-            <div>TOTAL MASTERY: 1.2%</div>
-            <div class="xp-bar-container"><div class="xp-fill"></div></div>
-            <div style="font-size: 12px; margin-top: 5px; color: #aaa;">WORLD RANK: #9,421,050</div>
+    <div class="header-hud">
+        <div class="trailblazer-info">
+            <div style="font-size: 0.8rem; color: var(--sr-blue);">PATH OF COMPLETION</div>
+            <div style="font-size: 1.8rem; font-weight: bold;">ULTIMATE HUMAN</div>
+        </div>
+        <div class="completion-circle">
+            <span style="font-size: 0.7rem;">LVL</span>
+            <span style="font-size: 1.5rem; font-weight: bold;">01</span>
         </div>
     </div>
 
-    <div class="canvas-area">
-        <div class="gateway-core">
-            <div class="portal-animation"></div>
-        </div>
-
-        <div class="node-link" style="top: 20%; left: 30%;">
-            <div class="node-box">
-                <img src="https://minecraft.wiki/images/thumb/Book_JE2_BE2.png/150px-Book_JE2_BE2.png" width="40">
+    <div class="main-stage">
+        <div class="node-container">
+            <div class="sr-node active">
+                <div class="rank-badge">01</div>
+                <div>
+                    <div>THE GRANDMASTER</div>
+                    <div style="font-size: 0.7rem; color: #888;">CHESS ELO: 2150</div>
+                </div>
             </div>
-            <span class="node-label">THE GRANDMASTER</span>
-            <span style="color: var(--mc-green); font-size: 10px;">ELO: 2150</span>
-        </div>
-
-        <div class="node-link" style="top: 60%; left: 70%;">
-            <div class="node-box">
-                <img src="https://minecraft.wiki/images/thumb/Diamond_Sword_JE3_BE3.png/150px-Diamond_Sword_JE3_BE3.png" width="40">
+            <div class="sr-node">
+                <div class="rank-badge">02</div>
+                <div>
+                    <div>THE ARCHITECT</div>
+                    <div style="font-size: 0.7rem; color: #888;">GITHUB STREAK: 365</div>
+                </div>
             </div>
-            <span class="node-label">THE ENGINE</span>
-            <span style="color: var(--mc-green); font-size: 10px;">VO2 MAX: 58</span>
         </div>
 
-        <div class="connector" style="top: 50%; left: 50%; width: 200px; height: 4px; transform: rotate(-30deg);"></div>
+        <div class="stats-panel">
+            <h3 style="text-align: center; letter-spacing: 4px;">POTENTIAL ANALYSIS</h3>
+            <div class="radar-placeholder">
+                <div style="position:absolute; top:20%; left:20%; width:60%; height:50%; background:rgba(0, 242, 255, 0.2); clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);"></div>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 0.8rem;">
+                <div>INTELLECT: <span style="color:var(--sr-blue)">TOP 0.5%</span></div>
+                <div>PHYSICAL: <span style="color:var(--sr-blue)">TOP 12%</span></div>
+                <div>SOCIAL: <span style="color:var(--sr-blue)">TOP 45%</span></div>
+                <div>WEALTH: <span style="color:var(--sr-blue)">TOP 10%</span></div>
+            </div>
+        </div>
+
+        <div class="node-container">
+            <div class="stats-panel" style="border-left: none; border-right: 4px solid var(--sr-gold);">
+                <div style="color: var(--sr-gold);">WORLD LEADERBOARD</div>
+                <div style="font-size: 2rem;">#9,421,050</div>
+                <hr style="border: 0; border-top: 1px solid var(--border); margin: 15px 0;">
+                <div style="font-size: 0.8rem;">NEXT TIER: <span style="color: #fff;">#1,000,000</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-sync">
+        <button class="sync-btn">INITIALIZE DATA SYNC</button>
     </div>
 
 </body>
