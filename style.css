@@ -3,66 +3,109 @@
     src: url('https://fonts.cdnfonts.com/s/14897/Minecraftia-Regular.woff');
 }
 
-body {
-    background: #050505; /* Black void */
-    color: #AAAAAA;
-    font-family: 'Minecraft', sans-serif;
-    image-rendering: pixelated;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
+:root {
+    --mc-green: #55FF55;
+    --mc-purple: #b432ff;
+    --mc-gray: #373737;
+    --bedrock: #222;
 }
 
-/* The Gateway Portal */
-.gateway-frame {
-    width: 80px;
-    height: 80px;
-    background-image: url('bedrock.png');
-    background-size: 30px;
-    padding: 10px;
-    border: 4px solid #000;
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #050505;
+    font-family: 'Minecraft', sans-serif;
+    color: white;
+    overflow: hidden;
+    image-rendering: pixelated;
+}
+
+/* 1. ANIMATED VOID */
+.void-bg {
+    position: fixed;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, #1a0a2e 0%, #050505 70%);
+    animation: drift 60s linear infinite;
+    z-index: -1;
+}
+
+@keyframes drift {
+    from { transform: translate(-25%, -25%) rotate(0deg); }
+    to { transform: translate(-25%, -25%) rotate(360deg); }
+}
+
+/* 2. THE GATEWAY PORTALS */
+.portal-frame {
+    width: 100px;
+    height: 100px;
+    background: var(--bedrock);
+    border: 6px solid #000;
     position: relative;
-    box-shadow: 0 0 20px rgba(180, 50, 255, 0.3);
+    box-shadow: 0 0 0 4px #111;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .portal-core {
     width: 100%;
     height: 100%;
-    background: #000 url('end_portal.gif'); /* Animated portal stars */
-    background-size: cover;
-    box-shadow: inset 0 0 10px #b432ff;
+    background: black;
+    overflow: hidden;
+    position: relative;
 }
 
-.gateway:hover .gateway-frame {
-    box-shadow: 0 0 40px #b432ff;
-    transform: scale(1.1);
+/* The Animated Stars inside the portal */
+.portal-core::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 50px 10px, #b432ff, rgba(0,0,0,0));
+    background-size: 100px 100px;
+    animation: portalScroll 10s linear infinite;
 }
 
-/* UI Elements */
-.gateway-label {
-    text-align: center;
-    color: #fff;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px #3f3f3f;
+@keyframes portalScroll {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100px); }
 }
 
-.gateway-stats {
-    margin-top: 10px;
-    color: #55FF55; /* Minecraft Green for "Active" */
-    font-size: 0.8rem;
+/* 3. ENCHANTMENT GLOW EFFECT */
+.glow-text {
+    color: var(--mc-green);
+    text-shadow: 0 0 8px var(--mc-green);
+    animation: pulse 2s ease-in-out infinite;
 }
 
-.mc-progress {
-    width: 200px;
-    height: 20px;
-    background: #333;
-    border: 3px solid #000;
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
 }
 
-.mc-progress .fill {
+/* 4. MC PROGRESS BAR */
+.mc-progress-bar {
+    width: 300px;
+    height: 24px;
+    background: #111;
+    border: 4px solid #555;
+    border-top-color: #222;
+    border-left-color: #222;
+}
+
+.mc-progress-fill {
     height: 100%;
-    background: #55FF55;
-    box-shadow: inset -4px 0px 0px #3EBB3E;
+    background: var(--mc-green);
+    box-shadow: inset -6px 0 0 #3ebb3e;
+}
+
+/* 5. HOVER EFFECTS */
+.gateway:hover .portal-frame {
+    transform: scale(1.15) rotate(5deg);
+    border-color: var(--mc-purple);
+    box-shadow: 0 0 30px var(--mc-purple);
 }
