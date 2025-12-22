@@ -1,85 +1,99 @@
+@font-face {
+    font-family: 'Minecraft';
+    src: url('https://fonts.cdnfonts.com/s/14897/Minecraftia-Regular.woff');
+}
+
 :root {
-    --mc-bg: #212121;
-    --mc-border-light: #f0f0f0;
-    --mc-border-dark: #555555;
-    --line-gray: #707070;
+    --mc-green: #55FF55;
+    --mc-purple: #b432ff;
+    --void-black: #050508;
 }
 
 body {
-    background-color: #1a1a1a;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    background: radial-gradient(circle at center, #1a0a2e 0%, var(--void-black) 100%);
     margin: 0;
     font-family: 'Minecraft', sans-serif;
-}
-
-/* The Menu Window */
-.mc-window {
-    width: 800px;
-    height: 600px;
-    background: #c6c6c6;
-    border: 4px solid #000;
-    box-shadow: inset 4px 4px #ffffff, inset -4px -4px #555555;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-}
-
-/* The Background Tiling (End Stone or Dirt) */
-.mc-content-area {
-    flex-grow: 1;
-    margin: 20px;
-    background-image: url('https://minecraft.wiki/images/End_Stone_JE3_BE2.png');
-    background-size: 64px;
-    image-rendering: pixelated;
-    border: 4px solid #000;
-    box-shadow: inset 10px 10px 20px rgba(0,0,0,0.5);
-    overflow: auto; /* Allows panning */
-    position: relative;
-}
-
-/* Connecting Lines */
-.mc-line {
-    position: absolute;
-    background: var(--line-gray);
-    box-shadow: 2px 2px #000;
-    z-index: 1;
-}
-.h-line { height: 6px; }
-.v-line { width: 6px; }
-
-/* Advancement Nodes */
-.adv-node {
-    position: absolute;
-    width: 52px;
-    height: 52px;
-    background: #999;
-    border: 3px solid #000;
+    color: white;
+    height: 100vh;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2;
+}
+
+/* The Central Bedrock Hub */
+.bedrock-structure {
+    width: 120px;
+    height: 120px;
+    background: #222; /* Use a bedrock texture here */
+    border: 6px solid #000;
+    box-shadow: inset 4px 4px #444, inset -4px -4px #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.portal-eye {
+    width: 60%;
+    height: 60%;
+    background: #000;
+    box-shadow: 0 0 20px var(--mc-purple), inset 0 0 10px #fff;
+    animation: portalPulse 2s infinite alternate;
+}
+
+@keyframes portalPulse {
+    from { transform: scale(0.9); opacity: 0.8; }
+    to { transform: scale(1.1); opacity: 1; box-shadow: 0 0 30px var(--mc-purple); }
+}
+
+/* Domain Nodes Floating in Space */
+.domain-node {
+    position: absolute;
+    transform: translate(var(--x), var(--y));
+    text-align: center;
+}
+
+.node-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    transition: 0.3s;
+}
+
+.node-icon img {
+    width: 64px;
     image-rendering: pixelated;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
 }
 
-.adv-node.active {
-    background: #55FF55; /* Green if unlocked */
-    box-shadow: 0 0 15px #55FF55;
+.node-icon:hover {
+    transform: scale(1.2);
 }
 
-.adv-node.goal {
-    border-radius: 50%; /* World-class nodes are round */
-    background: #FF55FF; /* Purple for Top 100 */
+.node-label {
+    margin-top: 10px;
+    font-size: 14px;
+    text-shadow: 2px 2px #000;
 }
 
-/* Buttons */
-.mc-btn {
-    background: #c6c6c6;
-    border: 2px solid #000;
-    box-shadow: inset 2px 2px #fff, inset -2px -2px #555;
-    padding: 10px 40px;
-    cursor: pointer;
-    margin: 10px;
+.node-sub {
+    color: var(--mc-green);
+    font-size: 10px;
+}
+
+/* Connector Lines (Warframe Style) */
+.connector-line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200px; /* Calculated distance */
+    height: 2px;
+    background: linear-gradient(90deg, var(--mc-purple), transparent);
+    z-index: -1;
+    transform-origin: left;
+    opacity: 0.3;
 }
