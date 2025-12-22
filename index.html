@@ -1,34 +1,150 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Omni-Rank Console v3.0</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono&family=Inter:wght@300;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omni-Rank Console | Totality</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root { --bg: #000; --text: #fff; --accent: #00ffcc; --border: #333; }
+        body { background: var(--bg); color: var(--text); font-family: 'Space Mono', monospace; margin: 0; display: flex; flex-direction: column; align-items: center; overflow-x: hidden; }
+        .header { width: 100%; border-bottom: 1px solid var(--border); padding: 20px; text-align: center; background: rgba(0,0,0,0.8); position: sticky; top: 0; z-index: 100; }
+        .rank-display { font-size: 2.5rem; color: var(--accent); margin: 10px 0; text-shadow: 0 0 10px var(--accent); }
+        .container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 90%; max-width: 1200px; padding: 40px 0; }
+        .card { border: 1px solid var(--border); padding: 20px; background: #050505; border-radius: 4px; }
+        h2 { font-family: 'Poppins', sans-serif; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-top: 0; text-transform: uppercase; letter-spacing: 2px; }
+        .stat-input { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        input { background: #111; border: 1px solid var(--border); color: var(--accent); padding: 8px; width: 80px; text-align: center; }
+        .tier-label { font-size: 0.8rem; color: #888; text-transform: uppercase; }
+        .chart-container { position: relative; height: 300px; width: 100%; }
+        button { background: var(--accent); color: #000; border: none; padding: 15px 30px; font-family: 'Space Mono'; font-weight: bold; cursor: pointer; margin-bottom: 50px; transition: 0.3s; }
+        button:hover { box-shadow: 0 0 20px var(--accent); transform: scale(1.05); }
+    </style>
 </head>
 <body>
-<div class="globe"></div>
 
-<header>
-  <div>
-    <div class="user">USER://EPICVERSAL</div>
-    <div class="title">OMNI-RANK CONSOLE</div>
-  </div>
-  <div class="rankbox">
-    <div class="label">GLOBAL_RANK</div>
-    <div id="rank" class="rank"></div>
-  </div>
-</header>
+    <div class="header">
+        <div style="font-size: 0.8rem; color: #888;">GLOBAL LEADERBOARD POSITION</div>
+        <div id="rankDisplay" class="rank-display">8,102,405,122</div>
+        <div id="percentileDisplay" style="font-size: 0.9rem; color: var(--accent);">TOP 100.0000%</div>
+    </div>
 
-<main>
-  <section id="tree"></section>
-  <section class="panel">
-    <input id="pass" type="password" placeholder="ACCESS CODE">
-    <div id="log"></div>
-  </section>
-</main>
+    <div class="container">
+        <div class="card">
+            <h2>Benchmark Entry</h2>
+            
+            <div class="stat-input">
+                <span>Neural (Typing WPM)</span>
+                <input type="number" id="wpm" placeholder="0" onchange="updateRank()">
+            </div>
+            <div class="stat-input">
+                <span>Physical (5km Time - Sec)</span>
+                <input type="number" id="run" placeholder="1800" onchange="updateRank()">
+            </div>
+            <div class="stat-input">
+                <span>Strategy (Chess ELO)</span>
+                <input type="number" id="chess" placeholder="400" onchange="updateRank()">
+            </div>
+            <div class="stat-input">
+                <span>Creative (Blender Nodes %)</span>
+                <input type="number" id="blender" placeholder="0" onchange="updateRank()">
+            </div>
+            <div class="stat-input">
+                <span>Academic (Average Grade %)</span>
+                <input type="number" id="grades" placeholder="0" onchange="updateRank()">
+            </div>
+        </div>
 
-<script src="script.js"></script>
+        <div class="card">
+            <h2>Omni-Profile</h2>
+            <div class="chart-container">
+                <canvas id="radarChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="saveAndSync()">EXECUTE & SYNC TO DISCORD</button>
+
+    <script>
+        const initialPopulation = 8102405122;
+        let chart;
+
+        // Rank Math Logic
+        function updateRank() {
+            let wpm = document.getElementById('wpm').value || 0;
+            let run = document.getElementById('run').value || 3600; // Default 1 hour
+            let chess = document.getElementById('chess').value || 400;
+            let blender = document.getElementById('blender').value || 0;
+            let grades = document.getElementById('grades').value || 0;
+
+            // Normalized scores (0 to 100)
+            let s1 = Math.min((wpm / 150) * 100, 100);
+            let s2 = Math.min((1200 / run) * 100, 100); // 1200s = 20min
+            let s3 = Math.min((chess / 2500) * 100, 100);
+            let s4 = Math.min(blender, 100);
+            let s5 = Math.min(grades, 100);
+
+            let totalPower = (s1 + s2 + s3 + s4 + s5) / 5;
+            
+            // Logarithmic drop (The higher the power, the smaller the rank)
+            let currentRank = Math.floor(initialPopulation * Math.pow(0.9, totalPower/2));
+            if (totalPower > 95) currentRank = Math.floor(Math.random() * 10) + 1; // Top tier
+
+            document.getElementById('rankDisplay').innerText = currentRank.toLocaleString();
+            document.getElementById('percentileDisplay').innerText = `TOP ${((currentRank/initialPopulation)*100).toFixed(6)}%`;
+
+            updateChart([s1, s2, s3, s4, s5]);
+        }
+
+        function updateChart(data) {
+            chart.data.datasets[0].data = data;
+            chart.update();
+        }
+
+        // Discord Integration
+        async function saveAndSync() {
+            const webhook = "https://discord.com/api/webhooks/1452050186124656868/E_Dm596hXN7Lqcxl061uIFE8V3NN3oq10_9mdNg1mQQ7x3jbsaexsG04iv_5IanmCZvw";
+            const rank = document.getElementById('rankDisplay').innerText;
+            
+            const payload = {
+                embeds: [{
+                    title: "🚀 OMNI-RANK SYNCHRONIZED",
+                    color: 65535,
+                    fields: [
+                        { name: "Global Rank", value: `#${rank}`, inline: true },
+                        { name: "Neural Stat", value: `${document.getElementById('wpm').value} WPM`, inline: true }
+                    ],
+                    footer: { text: "Epic Global Console | User: Sephy" }
+                }]
+            };
+
+            await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            alert("Rank Synchronized to Discord.");
+        }
+
+        // Initialize
+        window.onload = () => {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            chart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Neural', 'Physical', 'Strategic', 'Creative', 'Academic'],
+                    datasets: [{
+                        label: 'Skill Totality',
+                        data: [0, 0, 0, 0, 0],
+                        backgroundColor: 'rgba(0, 255, 204, 0.2)',
+                        borderColor: '#00ffcc',
+                        pointBackgroundColor: '#00ffcc'
+                    }]
+                },
+                options: { 
+                    scales: { r: { min: 0, max: 100, grid: { color: '#333' }, ticks: { display: false } } },
+                    plugins: { legend: { display: false } }
+                }
+            });
+            updateRank();
+        };
+    </script>
 </body>
 </html>
