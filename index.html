@@ -1,38 +1,51 @@
-<div class="mc-gui-wrapper">
-    <div class="mc-window">
-        <div class="mc-header">
-            <span>Advancements</span>
-        </div>
-        
-        <div class="mc-content-area">
-            <div class="advancement-map">
-                
-                <div class="adv-node root active" style="top: 200px; left: 50px;">
-                    <img src="https://minecraft.wiki/images/Chess_Piece_Icon.png" class="pixel-icon">
-                    <div class="node-tooltip">The Grandmaster: Start your journey</div>
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ultimate Completionist | The End</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-                <div class="mc-line h-line" style="top: 228px; left: 104px; width: 60px;"></div>
-
-                <div class="adv-node challenge" style="top: 200px; left: 160px;">
-                    <div class="mc-frame"></div>
-                    <img src="https://minecraft.wiki/images/Diamond_Sword_Icon.png" class="pixel-icon">
-                    <div class="node-tooltip">Elite Tactician: Reach 1500 ELO</div>
-                </div>
-
-                <div class="mc-line v-line" style="top: 256px; left: 188px; height: 100px;"></div>
-
-                <div class="adv-node goal" style="top: 350px; left: 160px;">
-                    <div class="mc-frame"></div>
-                    <img src="https://minecraft.wiki/images/Nether_Star_Icon.png" class="pixel-icon">
-                    <div class="node-tooltip">ULTIMATE: Top 100 in the World</div>
-                </div>
-
+    <div class="hud">
+        <div class="top-bar">
+            <div class="stat-box">
+                <span class="label">TOTAL MASTERY</span>
+                <div class="mc-progress"><div class="fill" style="width: 1.2%"></div></div>
+                <span class="value">1.2%</span>
             </div>
-        </div>
-
-        <div class="mc-footer">
-            <button class="mc-btn">Done</button>
+            <div class="rank-box">WORLD RANK: #9,421,050</div>
         </div>
     </div>
-</div>
+
+    <div class="gateway-canvas">
+        
+        <div class="hub-container">
+            <div class="bedrock-structure">
+                <div class="portal-eye"></div>
+            </div>
+            <h1 class="hub-title">ALL DOMAINS</h1>
+        </div>
+
+        <div class="domain-node" style="--x: -250px; --y: -150px;">
+            <div class="connector-line"></div>
+            <a href="grandmaster.html" class="node-icon">
+                <img src="https://minecraft.wiki/images/thumb/Book_JE2_BE2.png/150px-Book_JE2_BE2.png" alt="Chess">
+                <span class="node-label">THE GRANDMASTER</span>
+                <span class="node-sub">ELO: 2150</span>
+            </a>
+        </div>
+
+        <div class="domain-node" style="--x: 250px; --y: -150px;">
+            <div class="connector-line"></div>
+            <a href="engine.html" class="node-icon">
+                <img src="https://minecraft.wiki/images/thumb/Raw_Porkchop_JE3_BE2.png/150px-Raw_Porkchop_JE3_BE2.png" alt="Fitness">
+                <span class="node-label">THE ENGINE</span>
+                <span class="node-sub">VO2 MAX: 58</span>
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>
