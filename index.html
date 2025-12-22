@@ -1,55 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Completionist | Global Atlas</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<div class="end-system">
+    <div class="stats-overlay">
+        <p>TOTAL COMPLETION: 1.2%</p>
+        <div class="mc-progress"><div class="fill" style="width: 1.2%;"></div></div>
+    </div>
 
-    <header>
-        <div class="header-content">
-            <h1>WORLD RANKING: <span id="global-rank">#9,421,050</span></h1>
-            <div class="completion-container">
-                <p>TOTAL COMPLETION: 1.2%</p>
-                <div class="main-progress"><div class="fill" style="width: 1.2%;"></div></div>
+    <div class="gateway-container">
+        <a href="grandmaster.html" class="gateway">
+            <div class="gateway-label">THE GRANDMASTER</div>
+            <div class="gateway-frame">
+                <div class="portal-core"></div>
             </div>
-        </div>
-    </header>
-
-    <main class="atlas-grid">
-        <a href="domains/grandmaster.html" class="domain-card" id="chess-node">
-            <div class="node-icon">♟</div>
-            <div class="node-info">
-                <h2>The Grandmaster</h2>
-                <p class="stat">ELO: <span id="chess-elo">---</span></p>
-                <p class="sub-stat">Rank: <span id="chess-rank">Syncing...</span></p>
-            </div>
-            <div class="status-indicator active"></div>
+            <div class="gateway-stats">ELO: 2150</div>
         </a>
 
-        <a href="domains/polymath.html" class="domain-card" id="code-node">
-            <div class="node-icon">&lt;/&gt;</div>
-            <div class="node-info">
-                <h2>The Polymath</h2>
-                <p class="stat">GH Streak: <span id="gh-streak">---</span></p>
-                <p class="sub-stat">World Percentile: <span id="gh-rank">Syncing...</span></p>
+        <a href="engine.html" class="gateway">
+            <div class="gateway-label">THE ENGINE</div>
+            <div class="gateway-frame">
+                <div class="portal-core"></div>
             </div>
-            <div class="status-indicator"></div>
+            <div class="gateway-stats">VO2: 58</div>
         </a>
-
-        <a href="domains/engine.html" class="domain-card" id="fitness-node">
-            <div class="node-icon">⚡</div>
-            <div class="node-info">
-                <h2>The Engine</h2>
-                <p class="stat">VO2 Max: <span id="vo2-max">---</span></p>
-                <p class="sub-stat">Target: Top 100</p>
-            </div>
-            <div class="status-indicator"></div>
-        </a>
-    </main>
-
-    <script src="sync.js"></script>
-</body>
-</html>
+    </div>
+</div>
