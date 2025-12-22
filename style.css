@@ -1,34 +1,68 @@
-/* mastery-core.css */
-:root {
-    --bg-space: #050507;
-    --glass: rgba(255, 255, 255, 0.03);
-    --border-glass: rgba(255, 255, 255, 0.1);
-    --node-active: #00f2ff; /* Warframe-style Cyan */
-    --node-locked: #333;
+@font-face {
+    font-family: 'Minecraft';
+    src: url('https://fonts.cdnfonts.com/s/14897/Minecraftia-Regular.woff');
 }
 
 body {
-    background: radial-gradient(circle at center, #111 0%, var(--bg-space) 100%);
-    color: #fff;
-    font-family: 'Outfit', sans-serif; /* Clean, modern font */
-    overflow: hidden; /* We want a fixed-screen "App" feel */
-}
-
-/* The "Star Chart" Node Style */
-.node {
-    width: 60px;
-    height: 60px;
-    border: 2px solid var(--node-locked);
-    background: var(--glass);
+    background: #050505; /* Black void */
+    color: #AAAAAA;
+    font-family: 'Minecraft', sans-serif;
+    image-rendering: pixelated;
     display: flex;
-    align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); /* Hexagon Shape */
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
 }
 
-.node.completed {
-    border-color: var(--node-active);
-    box-shadow: 0 0 15px var(--node-active);
+/* The Gateway Portal */
+.gateway-frame {
+    width: 80px;
+    height: 80px;
+    background-image: url('bedrock.png');
+    background-size: 30px;
+    padding: 10px;
+    border: 4px solid #000;
+    position: relative;
+    box-shadow: 0 0 20px rgba(180, 50, 255, 0.3);
+}
+
+.portal-core {
+    width: 100%;
+    height: 100%;
+    background: #000 url('end_portal.gif'); /* Animated portal stars */
+    background-size: cover;
+    box-shadow: inset 0 0 10px #b432ff;
+}
+
+.gateway:hover .gateway-frame {
+    box-shadow: 0 0 40px #b432ff;
+    transform: scale(1.1);
+}
+
+/* UI Elements */
+.gateway-label {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px #3f3f3f;
+}
+
+.gateway-stats {
+    margin-top: 10px;
+    color: #55FF55; /* Minecraft Green for "Active" */
+    font-size: 0.8rem;
+}
+
+.mc-progress {
+    width: 200px;
+    height: 20px;
+    background: #333;
+    border: 3px solid #000;
+}
+
+.mc-progress .fill {
+    height: 100%;
+    background: #55FF55;
+    box-shadow: inset -4px 0px 0px #3EBB3E;
 }
