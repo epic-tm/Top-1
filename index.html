@@ -1,51 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Ultimate Completionist | The End</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="void-bg"></div>
-
-    <div class="hud-top">
-        <div class="mc-container">
-            <div class="label-row">
-                <span>TOTAL MASTERY</span>
-                <span id="percent-text">1.2%</span>
-            </div>
-            <div class="mc-progress-bar">
-                <div class="mc-progress-fill" style="width: 1.2%;"></div>
-            </div>
-            <div class="world-rank">WORLD RANK: #9,421,050</div>
+<div class="mc-gui-wrapper">
+    <div class="mc-window">
+        <div class="mc-header">
+            <span>Advancements</span>
         </div>
-    </div>
-
-    <div class="star-chart">
-        <div class="node-wrapper" style="top: 30%; left: 25%;">
-            <a href="chess-deep-dive.html" class="gateway">
-                <div class="portal-title">THE GRANDMASTER</div>
-                <div class="portal-frame">
-                    <div class="portal-core"></div>
-                    <div class="portal-particles"></div>
+        
+        <div class="mc-content-area">
+            <div class="advancement-map">
+                
+                <div class="adv-node root active" style="top: 200px; left: 50px;">
+                    <img src="https://minecraft.wiki/images/Chess_Piece_Icon.png" class="pixel-icon">
+                    <div class="node-tooltip">The Grandmaster: Start your journey</div>
                 </div>
-                <div class="portal-stats">ELO: <span class="glow-text">2150</span></div>
-            </a>
-        </div>
 
-        <div class="node-wrapper" style="top: 50%; left: 70%;">
-            <a href="fitness-deep-dive.html" class="gateway">
-                <div class="portal-title">THE ENGINE</div>
-                <div class="portal-frame">
-                    <div class="portal-core"></div>
+                <div class="mc-line h-line" style="top: 228px; left: 104px; width: 60px;"></div>
+
+                <div class="adv-node challenge" style="top: 200px; left: 160px;">
+                    <div class="mc-frame"></div>
+                    <img src="https://minecraft.wiki/images/Diamond_Sword_Icon.png" class="pixel-icon">
+                    <div class="node-tooltip">Elite Tactician: Reach 1500 ELO</div>
                 </div>
-                <div class="portal-stats">VO2: <span class="glow-text">58</span></div>
-            </a>
+
+                <div class="mc-line v-line" style="top: 256px; left: 188px; height: 100px;"></div>
+
+                <div class="adv-node goal" style="top: 350px; left: 160px;">
+                    <div class="mc-frame"></div>
+                    <img src="https://minecraft.wiki/images/Nether_Star_Icon.png" class="pixel-icon">
+                    <div class="node-tooltip">ULTIMATE: Top 100 in the World</div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="mc-footer">
+            <button class="mc-btn">Done</button>
         </div>
     </div>
-
-    <div class="hud-bottom">
-        <button class="mc-button">SYNC ALL DOMAINS</button>
-    </div>
-</body>
-</html>
+</div>
