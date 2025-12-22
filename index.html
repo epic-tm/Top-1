@@ -1,24 +1,51 @@
-<div class="end-system">
-    <div class="stats-overlay">
-        <p>TOTAL COMPLETION: 1.2%</p>
-        <div class="mc-progress"><div class="fill" style="width: 1.2%;"></div></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ultimate Completionist | The End</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="void-bg"></div>
+
+    <div class="hud-top">
+        <div class="mc-container">
+            <div class="label-row">
+                <span>TOTAL MASTERY</span>
+                <span id="percent-text">1.2%</span>
+            </div>
+            <div class="mc-progress-bar">
+                <div class="mc-progress-fill" style="width: 1.2%;"></div>
+            </div>
+            <div class="world-rank">WORLD RANK: #9,421,050</div>
+        </div>
     </div>
 
-    <div class="gateway-container">
-        <a href="grandmaster.html" class="gateway">
-            <div class="gateway-label">THE GRANDMASTER</div>
-            <div class="gateway-frame">
-                <div class="portal-core"></div>
-            </div>
-            <div class="gateway-stats">ELO: 2150</div>
-        </a>
+    <div class="star-chart">
+        <div class="node-wrapper" style="top: 30%; left: 25%;">
+            <a href="chess-deep-dive.html" class="gateway">
+                <div class="portal-title">THE GRANDMASTER</div>
+                <div class="portal-frame">
+                    <div class="portal-core"></div>
+                    <div class="portal-particles"></div>
+                </div>
+                <div class="portal-stats">ELO: <span class="glow-text">2150</span></div>
+            </a>
+        </div>
 
-        <a href="engine.html" class="gateway">
-            <div class="gateway-label">THE ENGINE</div>
-            <div class="gateway-frame">
-                <div class="portal-core"></div>
-            </div>
-            <div class="gateway-stats">VO2: 58</div>
-        </a>
+        <div class="node-wrapper" style="top: 50%; left: 70%;">
+            <a href="fitness-deep-dive.html" class="gateway">
+                <div class="portal-title">THE ENGINE</div>
+                <div class="portal-frame">
+                    <div class="portal-core"></div>
+                </div>
+                <div class="portal-stats">VO2: <span class="glow-text">58</span></div>
+            </a>
+        </div>
     </div>
-</div>
+
+    <div class="hud-bottom">
+        <button class="mc-button">SYNC ALL DOMAINS</button>
+    </div>
+</body>
+</html>
