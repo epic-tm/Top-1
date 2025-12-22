@@ -1,79 +1,34 @@
+/* mastery-core.css */
 :root {
-    --bg-dark: #0a0a0c;
-    --card-bg: #16161a;
-    --accent-blue: #3b82f6;
-    --master-gold: #fbbf24;
-    --text-main: #e2e8f0;
-    --text-dim: #94a3b8;
+    --bg-space: #050507;
+    --glass: rgba(255, 255, 255, 0.03);
+    --border-glass: rgba(255, 255, 255, 0.1);
+    --node-active: #00f2ff; /* Warframe-style Cyan */
+    --node-locked: #333;
 }
 
 body {
-    background-color: var(--bg-dark);
-    color: var(--text-main);
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 40px;
+    background: radial-gradient(circle at center, #111 0%, var(--bg-space) 100%);
+    color: #fff;
+    font-family: 'Outfit', sans-serif; /* Clean, modern font */
+    overflow: hidden; /* We want a fixed-screen "App" feel */
 }
 
-.header-content h1 {
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-    color: var(--text-dim);
-    margin-bottom: 20px;
-}
-
-.atlas-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 50px;
-}
-
-.domain-card {
-    background: var(--card-bg);
-    border: 1px solid #2d2d35;
-    padding: 24px;
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.domain-card:hover {
-    border-color: var(--accent-blue);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.node-icon {
-    font-size: 2rem;
-    background: #1e1e24;
+/* The "Star Chart" Node Style */
+.node {
     width: 60px;
     height: 60px;
+    border: 2px solid var(--node-locked);
+    background: var(--glass);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); /* Hexagon Shape */
 }
 
-.stat { font-weight: bold; font-size: 1.2rem; margin: 4px 0; }
-.sub-stat { color: var(--text-dim); font-size: 0.8rem; }
-
-.status-indicator {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #333;
-}
-
-.status-indicator.active {
-    background: var(--accent-blue);
-    box-shadow: 0 0 10px var(--accent-blue);
+.node.completed {
+    border-color: var(--node-active);
+    box-shadow: 0 0 15px var(--node-active);
 }
