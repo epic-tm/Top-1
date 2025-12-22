@@ -2,67 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trailblazer Archive | Completionist Dashboard</title>
+    <title>Trailblazer Archive | Dashboard</title>
     <style>
         :root {
             --hsr-purple: #5d2de6;
-            --hsr-cyan: #4deeea;
-            --hsr-dark: #0b0b0d;
-            --glow-color: rgba(93, 45, 230, 0.4);
+            --glow-color: rgba(93, 45, 230, 0.5);
         }
 
         body, html {
             margin: 0; padding: 0;
-            background-color: var(--hsr-dark);
+            background: #050505;
             color: white;
             font-family: 'Segoe UI', sans-serif;
-            height: 100vh;
-            overflow: hidden;
+            height: 100vh; overflow: hidden;
             display: flex;
         }
 
-        /* SPACE BACKGROUND */
-        .space-bg {
+        /* 1. THE SPACE VIDEO BACKGROUND (Permanent Link) */
+        .video-container {
             position: fixed;
-            width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #1a1a2e 0%, #000 100%);
+            top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1;
+            filter: brightness(0.4);
         }
 
-        /* SIDEBAR SELECTION */
+        /* 2. THE SIDEBAR (Selection Menu) */
         .sidebar {
-            width: 350px;
-            padding: 60px 40px;
-            background: linear-gradient(to right, rgba(0,0,0,0.8), transparent);
+            width: 380px;
+            padding: 80px 50px;
+            background: linear-gradient(to right, rgba(0,0,0,0.9), transparent);
             border-right: 1px solid rgba(255,255,255,0.1);
-            z-index: 10;
         }
 
-        .category-item {
-            padding: 20px;
-            margin-bottom: 15px;
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 2px solid transparent;
+        .category {
+            padding: 25px;
+            margin-bottom: 20px;
+            background: rgba(255,255,255,0.03);
             cursor: pointer;
-            transition: 0.4s;
-            clip-path: polygon(0% 0%, 90% 0%, 100% 20%, 100% 100%, 0% 100%);
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            /* The HSR Slant */
+            clip-path: polygon(0 0, 90% 0, 100% 20%, 100% 100%, 0 100%);
         }
 
-        .category-item:hover {
-            background: rgba(93, 45, 230, 0.1);
-            transform: translateX(10px);
-            border-left-color: var(--hsr-purple);
-        }
-
-        .active {
+        .category:hover {
+            transform: translateX(15px);
             background: rgba(93, 45, 230, 0.2);
-            border-left-color: var(--hsr-purple);
         }
 
-        /* MAIN VIEWPORT */
-        .viewport {
-            flex-grow: 1;
+        /* 3. THE PLANET AREA */
+        .main-view {
+            flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -70,122 +59,78 @@
             position: relative;
         }
 
-        /* THE PLANET BLOB (Atmosphere) */
-        .atmosphere-blob {
+        /* THE ATMOSPHERE (Your "Blob" link) */
+        .atmosphere {
             position: absolute;
-            width: 550px;
-            height: 550px;
+            width: 600px;
+            height: 600px;
             background: radial-gradient(circle, var(--glow-color) 0%, transparent 70%);
             border-radius: 50%;
-            filter: blur(30px);
-            animation: pulseBlob 6s infinite ease-in-out;
+            filter: blur(40px);
+            animation: breathe 8s infinite ease-in-out;
+            pointer-events: none;
         }
 
-        /* THE CSS SPHERE */
-        .planet-sphere {
+        /* THE PLANET SPHERE */
+        .sphere {
             position: relative;
-            width: 400px;
-            height: 400px;
+            width: 420px;
+            height: 420px;
             border-radius: 50%;
-            /* This creates the 3D depth without an image */
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2) 0%, transparent 40%),
-                radial-gradient(circle at 50% 50%, #2a1b4d 0%, #050505 100%);
-            box-shadow: 
-                inset -20px -20px 50px rgba(0,0,0,0.8),
-                inset 10px 10px 30px rgba(255,255,255,0.1);
-            transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
+            background: radial-gradient(circle at 30% 30%, #3a2b5d, #000);
+            box-shadow: inset -30px -30px 60px rgba(0,0,0,0.9), inset 10px 10px 40px rgba(255,255,255,0.1);
+            /* THE SPINNING ANIMATION */
+            animation: slowSpin 60s linear infinite;
+            transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        /* Surface Texture Simulation */
-        .planet-sphere::after {
-            content: "";
-            position: absolute;
-            width: 200%; height: 200%;
-            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
-            opacity: 0.3;
-            animation: slowRotate 40s linear infinite;
+        /* THE "LOCKING" EFFECT ON HOVER */
+        .main-view:hover .sphere {
+            animation-play-state: paused;
+            transform: scale(1.1) rotate(45deg); /* Locks to 45 degrees */
+            box-shadow: 0 0 50px var(--glow-color);
         }
 
-        .viewport:hover .planet-sphere {
-            transform: scale(1.05) rotate(15deg);
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.1); opacity: 0.7; }
         }
 
-        /* TITLES */
-        .world-name {
-            font-size: 5rem;
-            font-weight: 900;
-            letter-spacing: 15px;
-            margin-top: 40px;
-            text-transform: uppercase;
-            background: linear-gradient(to bottom, #fff, #666);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* KEYFRAMES */
-        @keyframes pulseBlob {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.15); opacity: 0.8; }
-        }
-
-        @keyframes slowRotate {
+        @keyframes slowSpin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
         }
 
+        .title {
+            font-size: 5rem;
+            letter-spacing: 20px;
+            margin-top: 50px;
+            background: linear-gradient(to bottom, #fff, #777);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 <body>
 
-    <div class="space-bg"></div>
+    <div class="video-container">
+        <video autoplay muted loop style="width:100%; height:100%; object-fit:cover;">
+            <source src="https://fastcdn.hoyoverse.com/static-resource-v2/2023/04/21/72e1c313a0112445e9e0789547d2106e_5939221528620358215.mp4" type="video/mp4">
+        </video>
+    </div>
 
     <div class="sidebar">
-        <h3 style="letter-spacing: 4px; color: #666; font-size: 0.8rem;">SYSTEM ARCHIVE</h3>
-        <div class="category-item active">
-            <div style="font-size: 0.7rem; color: var(--hsr-purple);">ID_001</div>
-            <div>STATION_HERTA</div>
-        </div>
-        <div class="category-item">
-            <div style="font-size: 0.7rem; color: #666;">ID_002</div>
-            <div>JARILO-VI</div>
-        </div>
-        <div class="category-item">
-            <div style="font-size: 0.7rem; color: #666;">ID_003</div>
-            <div>XIANZHOU_LUOFU</div>
-        </div>
+        <div class="category">HERTA STATION</div>
+        <div class="category">JARILO-VI</div>
+        <div class="category">LUOFU</div>
     </div>
 
-    <div class="viewport">
-        <div class="atmosphere-blob"></div>
-        <div class="planet-sphere"></div>
-        <h1 class="world-name">HERTA</h1>
-        <div style="letter-spacing: 10px; color: var(--hsr-purple); font-weight: bold;">TRAILBLAZER MISSION LIVE</div>
+    <div class="main-view">
+        <div class="atmosphere"></div>
+        <div class="sphere"></div>
+        <h1 class="title">Archive</h1>
     </div>
 
-    <script>
-        // Simple click interaction to change the "Locked" state
-        const items = document.querySelectorAll('.category-item');
-        const title = document.querySelector('.world-name');
-
-        items.forEach(item => {
-            item.addEventListener('click', () => {
-                items.forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
-                title.innerText = item.querySelector('div:last-child').innerText;
-                
-                // Add a small "re-locking" animation to the sphere
-                const sphere = document.querySelector('.planet-sphere');
-                sphere.style.transform = 'scale(0.9) rotate(-10deg)';
-                setTimeout(() => {
-                    sphere.style.transform = 'scale(1) rotate(0deg)';
-                }, 300);
-            });
-        });
-    </script>
 </body>
 </html>
