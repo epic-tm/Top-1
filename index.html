@@ -2,159 +2,190 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ultimate Completionist | Trailblazer Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trailblazer Archive | Completionist Dashboard</title>
     <style>
         :root {
-            --sr-cyan: #00f2ff;
-            --sr-gold: #f8d478;
-            --sr-bg: #02050a;
-            --glass: rgba(15, 25, 45, 0.7);
-            --border: rgba(0, 242, 255, 0.3);
-            --font-main: 'Segoe UI', sans-serif;
+            --hsr-purple: #5d2de6;
+            --hsr-cyan: #4deeea;
+            --hsr-dark: #0b0b0d;
+            --glow-color: rgba(93, 45, 230, 0.4);
         }
 
         body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            background: var(--sr-bg);
-            background-image: radial-gradient(circle at center, #0a162b 0%, #02050a 100%);
-            color: white; font-family: var(--font-main);
+            margin: 0; padding: 0;
+            background-color: var(--hsr-dark);
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* SPACE BACKGROUND */
+        .space-bg {
+            position: fixed;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1a1a2e 0%, #000 100%);
+            z-index: -1;
+        }
+
+        /* SIDEBAR SELECTION */
+        .sidebar {
+            width: 350px;
+            padding: 60px 40px;
+            background: linear-gradient(to right, rgba(0,0,0,0.8), transparent);
+            border-right: 1px solid rgba(255,255,255,0.1);
+            z-index: 10;
+        }
+
+        .category-item {
+            padding: 20px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 2px solid transparent;
+            cursor: pointer;
+            transition: 0.4s;
+            clip-path: polygon(0% 0%, 90% 0%, 100% 20%, 100% 100%, 0% 100%);
+        }
+
+        .category-item:hover {
+            background: rgba(93, 45, 230, 0.1);
+            transform: translateX(10px);
+            border-left-color: var(--hsr-purple);
+        }
+
+        .active {
+            background: rgba(93, 45, 230, 0.2);
+            border-left-color: var(--hsr-purple);
+        }
+
+        /* MAIN VIEWPORT */
+        .viewport {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* THE PLANET BLOB (Atmosphere) */
+        .atmosphere-blob {
+            position: absolute;
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, var(--glow-color) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(30px);
+            animation: pulseBlob 6s infinite ease-in-out;
+        }
+
+        /* THE CSS SPHERE */
+        .planet-sphere {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            /* This creates the 3D depth without an image */
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(255,255,255,0.2) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, #2a1b4d 0%, #050505 100%);
+            box-shadow: 
+                inset -20px -20px 50px rgba(0,0,0,0.8),
+                inset 10px 10px 30px rgba(255,255,255,0.1);
+            transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
             overflow: hidden;
         }
 
-        /* Scanline Effect */
-        body::before {
-            content: " ";
-            position: fixed; top: 0; left: 0; width: 100%; height: 2px;
-            background: rgba(0, 242, 255, 0.1);
-            animation: scanline 8s linear infinite;
-            z-index: 100;
+        /* Surface Texture Simulation */
+        .planet-sphere::after {
+            content: "";
+            position: absolute;
+            width: 200%; height: 200%;
+            background-image: url('https://www.transparenttextures.com/patterns/asfalt-dark.png');
+            opacity: 0.3;
+            animation: slowRotate 40s linear infinite;
         }
 
-        @keyframes scanline { 0% { top: 0%; } 100% { top: 100%; } }
-
-        /* HUD Header */
-        .hud-header {
-            position: relative; z-index: 10;
-            display: flex; justify-content: space-between;
-            padding: 30px 60px;
-            border-bottom: 1px solid var(--border);
-            backdrop-filter: blur(5px);
+        .viewport:hover .planet-sphere {
+            transform: scale(1.05) rotate(15deg);
         }
 
-        /* Domain Diamonds (The Star Rail Style) */
-        .domain-container {
-            display: flex; flex-direction: column; gap: 30px;
-            position: relative; z-index: 10;
+        /* TITLES */
+        .world-name {
+            font-size: 5rem;
+            font-weight: 900;
+            letter-spacing: 15px;
+            margin-top: 40px;
+            text-transform: uppercase;
+            background: linear-gradient(to bottom, #fff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .domain-diamond {
-            width: 320px; height: 90px;
-            background: var(--glass);
-            border-left: 4px solid var(--sr-cyan);
-            clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
-            display: flex; align-items: center; padding: 0 25px;
-            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            cursor: pointer;
-            border-right: 1px solid transparent;
+        /* KEYFRAMES */
+        @keyframes pulseBlob {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.15); opacity: 0.8; }
         }
 
-        .domain-diamond:hover {
-            transform: translateX(15px);
-            background: rgba(0, 242, 255, 0.15);
-            border-right: 1px solid var(--sr-cyan);
-            box-shadow: -10px 0 20px rgba(0, 242, 255, 0.2);
+        @keyframes slowRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
-        .node-number {
-            font-size: 24px; font-weight: 900; color: rgba(255,255,255,0.2);
-            margin-right: 20px; font-style: italic;
-        }
-
-        /* The Radar (Center Display) */
-        .radar-box {
-            position: relative;
-            display: flex; justify-content: center; align-items: center;
-        }
-
-        .radar-ring {
-            position: absolute; width: 400px; height: 400px;
-            border: 1px solid var(--border); border-radius: 50%;
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-        /* Sync Button */
-        .btn-sync {
-            background: transparent; color: var(--sr-cyan);
-            border: 1px solid var(--sr-cyan);
-            padding: 12px 40px; font-size: 14px; letter-spacing: 4px;
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
-            transition: 0.3s; cursor: pointer;
-        }
-
-        .btn-sync:hover {
-            background: var(--sr-cyan); color: #000;
-            box-shadow: 0 0 30px var(--sr-cyan);
-        }
     </style>
 </head>
 <body>
 
-    <header class="hud-header">
-        <div>
-            <div style="color: var(--sr-cyan); font-size: 12px; letter-spacing: 3px;">SYSTEM VERSION 2.5.0</div>
-            <div style="font-size: 24px; font-weight: bold; letter-spacing: 1px;">TRAILBLAZER: <span style="color:var(--sr-gold)">USER_01</span></div>
-        </div>
-        <div style="text-align: right">
-            <div style="font-size: 12px; color: var(--sr-cyan);">COMPLETION RATE</div>
-            <div style="font-size: 28px; font-weight: bold;">1.22<span style="font-size: 14px;">%</span></div>
-        </div>
-    </header>
+    <div class="space-bg"></div>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 60px; align-items: center; height: 60vh;">
-        
-        <div class="domain-container">
-            <div class="domain-diamond">
-                <span class="node-number">01</span>
-                <div>
-                    <div style="font-size: 11px; color: var(--sr-cyan);">INTELLECTUAL</div>
-                    <div style="font-size: 18px; font-weight: bold;">CHESS MASTERY</div>
-                </div>
-            </div>
-            <div class="domain-diamond">
-                <span class="node-number">02</span>
-                <div>
-                    <div style="font-size: 11px; color: var(--sr-cyan);">TECHNICAL</div>
-                    <div style="font-size: 18px; font-weight: bold;">CODE ARCHITECT</div>
-                </div>
-            </div>
-            <div class="domain-diamond">
-                <span class="node-number">03</span>
-                <div>
-                    <div style="font-size: 11px; color: var(--sr-cyan);">PHYSICAL</div>
-                    <div style="font-size: 18px; font-weight: bold;">BIO-ENGINE</div>
-                </div>
-            </div>
+    <div class="sidebar">
+        <h3 style="letter-spacing: 4px; color: #666; font-size: 0.8rem;">SYSTEM ARCHIVE</h3>
+        <div class="category-item active">
+            <div style="font-size: 0.7rem; color: var(--hsr-purple);">ID_001</div>
+            <div>STATION_HERTA</div>
         </div>
-
-        <div class="radar-box">
-            <div class="radar-ring"></div>
-            <div style="width: 250px; height: 250px; background: rgba(0,242,255,0.1); clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%); border: 1px solid var(--sr-cyan); position: relative; z-index: 5;">
-                <div style="width: 100%; height: 100%; background: var(--sr-cyan); opacity: 0.2; transform: scale(0.6);"></div>
-            </div>
+        <div class="category-item">
+            <div style="font-size: 0.7rem; color: #666;">ID_002</div>
+            <div>JARILO-VI</div>
         </div>
-
-        <div style="background: var(--glass); padding: 40px; border-right: 4px solid var(--sr-gold); clip-path: polygon(0 0, 100% 0, 100% 85%, 85% 100%, 0 100%);">
-            <div style="color: var(--sr-gold); letter-spacing: 2px; font-size: 12px;">GLOBAL DATASET</div>
-            <div style="font-size: 3rem; font-weight: bold; margin: 10px 0;">#9,421,050</div>
-            <div style="font-size: 13px; color: #888;">RANKING: <span style="color: white;">UNRANKED (LEVEL 1)</span></div>
+        <div class="category-item">
+            <div style="font-size: 0.7rem; color: #666;">ID_003</div>
+            <div>XIANZHOU_LUOFU</div>
         </div>
     </div>
 
-    <footer style="position: fixed; bottom: 50px; right: 60px;">
-        <button class="btn-sync">ACCESS ARCHIVE</button>
-    </footer>
+    <div class="viewport">
+        <div class="atmosphere-blob"></div>
+        <div class="planet-sphere"></div>
+        <h1 class="world-name">HERTA</h1>
+        <div style="letter-spacing: 10px; color: var(--hsr-purple); font-weight: bold;">TRAILBLAZER MISSION LIVE</div>
+    </div>
 
+    <script>
+        // Simple click interaction to change the "Locked" state
+        const items = document.querySelectorAll('.category-item');
+        const title = document.querySelector('.world-name');
+
+        items.forEach(item => {
+            item.addEventListener('click', () => {
+                items.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+                title.innerText = item.querySelector('div:last-child').innerText;
+                
+                // Add a small "re-locking" animation to the sphere
+                const sphere = document.querySelector('.planet-sphere');
+                sphere.style.transform = 'scale(0.9) rotate(-10deg)';
+                setTimeout(() => {
+                    sphere.style.transform = 'scale(1) rotate(0deg)';
+                }, 300);
+            });
+        });
+    </script>
 </body>
 </html>
