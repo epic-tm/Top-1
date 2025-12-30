@@ -1,0 +1,42 @@
+
+/* Minecraft pixel-art frame using 9-slice tiles */
+.adv-frame { 
+  width: 160px;
+  height: 64px;
+  display: grid;
+  grid-template-columns: 16px 1fr 16px;
+  grid-template-rows: 16px 1fr 16px;
+  gap: 0;
+  background: transparent;
+  box-sizing: border-box;
+}
+.adv-frame div { background-repeat: no-repeat; background-size: contain; }
+
+/* corners */
+.adv-tl { grid-column: 1; grid-row: 1; background-image: url('../assets/achievements/topleft.png'); }
+.adv-tm { grid-column: 2; grid-row: 1; background-image: url('../assets/achievements/topmiddle.png'); background-size: 100% 100%; }
+.adv-tr { grid-column: 3; grid-row: 1; background-image: url('../assets/achievements/topright.png'); }
+.adv-ml { grid-column: 1; grid-row: 2; background-image: url('../assets/achievements/middleleft.png'); }
+.adv-mm { grid-column: 2; grid-row: 2; background-image: url('../assets/achievements/middlemiddle.png'); }
+.adv-mr { grid-column: 3; grid-row: 2; background-image: url('../assets/achievements/middleright.png'); }
+.adv-bl { grid-column: 1; grid-row: 3; background-image: url('../assets/achievements/bottomleft.png'); }
+.adv-bm { grid-column: 2; grid-row: 3; background-image: url('../assets/achievements/bottommiddle.png'); }
+.adv-br { grid-column: 3; grid-row: 3; background-image: url('../assets/achievements/bottomright.png'); }
+
+/* achievement card inner content */
+.adv-content { grid-column: 1 / span 3; grid-row: 1 / span 3; display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding: 10px; box-sizing:border-box; }
+
+/* general layout */
+body { background: #0b0b0b; color: #fff; font-family: 'Minecraft', monospace; }
+#adv-list { display:flex; flex-wrap:wrap; gap:12px; padding:20px; }
+
+/* locked look */
+.locked .adv-content { opacity: 0.6; filter: grayscale(100%); }
+
+/* toast */
+#toast { position: fixed; right: 16px; bottom: 16px; background: rgba(0,0,0,0.9); border: 2px solid #7f7f7f; padding: 10px; display:none; }
+
+/* hud */
+#hud { position: fixed; left: 16px; top: 16px; }
+#xpBar { width: 240px; height: 12px; background:#222; border:1px solid #444; }
+#xpFill { height:100%; width:0%; background: linear-gradient(90deg,#7df,#3af); }
